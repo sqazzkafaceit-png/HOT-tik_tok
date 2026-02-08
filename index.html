@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#05060a" />
+  <title>HOT TikTok</title>
+
+  <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '651386837997268');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=651386837997268&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+
+  <style>
+    :root{
+      --bg:#05060a;
+      --card:#0a0b10;
+      --muted:rgba(243,244,246,.78);
+      --muted2:rgba(243,244,246,.62);
+      --line:rgba(255,255,255,.08);
+      --accent:#22c55e;
+      --accentText:#04120a;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:#fff;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* Bottom padding tuned so the last line (disc) is fully visible above sticky CTA */
+    .wrap{
+      max-width:520px;
+      margin:0 auto;
+      padding:12px 12px 170px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:6px 0 10px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+
+    .logo{
+      width:34px;height:34px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#ff2d55,#a855f7,#22c55e);
+      display:grid;place-items:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .logo svg{width:24px;height:24px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+    .brandText{display:flex;flex-direction:column;line-height:1.1}
+    .brandText b{font-size:15px;letter-spacing:.2px}
+    .brandText span{font-size:12px;color:var(--muted2)}
+
+    /* pill language switch */
+    .lang{
+      display:flex;
+      gap:6px;
+      background:rgba(255,255,255,.06);
+      padding:4px;
+      border-radius:999px;
+      border:1px solid var(--line);
+    }
+    .lang button{
+      border:0;
+      background:transparent;
+      color:rgba(255,255,255,.7);
+      font-weight:800;
+      font-size:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      min-width:44px;
+    }
+    .lang button.active{
+      background:rgba(255,255,255,.14);
+      color:#fff;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 18px 60px rgba(0,0,0,.35);
+    }
+
+    /* slider height reduced by ~20% (from 420 to 336) */
+    .slider{
+      position:relative;
+      height:336px;
+      background:#06070b;
+      overflow:hidden;
+      user-select:none;
+      -webkit-user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .slides{
+      display:flex;
+      height:100%;
+      transition:transform .35s ease;
+      will-change:transform;
+      touch-action:pan-y;
+      cursor:grab;
+    }
+    .slides.dragging{cursor:grabbing}
+
+    .slide{
+      min-width:100%;
+      height:100%;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:#07080d;
+    }
+
+    .slide::before{
+      content:"";
+      position:absolute; inset:0;
+      background:var(--bgimg) center/cover no-repeat;
+      filter:blur(18px) brightness(.55);
+      transform:scale(1.12);
+    }
+
+    .slide img{
+      position:relative;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      z-index:1;
+      filter:drop-shadow(0 10px 26px rgba(0,0,0,.45));
+      user-select:none;
+      -webkit-user-drag:none;
+      pointer-events:none; /* prevents dragging image on desktop */
+    }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      gap:10px;
+      pointer-events:none;
+    }
+
+    /* Top dots */
+    .dots{
+      position:absolute;
+      top:10px; left:50%;
+      transform:translateX(-50%);
+      display:flex; gap:6px;
+      z-index:5;
+      pointer-events:auto;
+    }
+    .dots i{
+      width:8px;height:8px;border-radius:999px;
+      background:rgba(255,255,255,.25);
+      display:block;
+      transition:all .25s ease;
+    }
+    .dots i.active{
+      width:18px;
+      background:rgba(255,255,255,.75);
+    }
+
+    /* Online/nearby row placed above messages bar */
+    .rowTop{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-end;
+      pointer-events:none;
+    }
+
+    .kicker{
+      pointer-events:auto;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:13px;
+      line-height:1.15;
+      box-shadow:0 14px 40px rgba(0,0,0,.35);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .kicker b{font-size:14px}
+    .kicker .dot{
+      display:inline-block;width:8px;height:8px;border-radius:999px;
+      background:var(--accent);
+      box-shadow:0 0 14px rgba(34,197,94,.8);
+    }
+
+    /* Messages bar at very bottom, count to the right */
+    .rowBottom{
+      pointer-events:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      width:100%;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      padding:12px 12px;
+      border-radius:16px;
+      font-size:13px;
+      box-shadow:0 14px 40px rgba(0,0,0,.35);
+    }
+    .rowBottom .left{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:rgba(255,255,255,.85);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .rowBottom .right{
+      font-weight:900;
+      font-size:14px;
+      color:rgba(34,197,94,.95);
+    }
+
+    .copy{
+      padding:14px 14px 16px;
+    }
+
+    /* Make headline-like, bold, bigger, italic and clickable */
+    .headlineLink{
+      display:block;
+      margin:0;
+      font-size:20px;
+      line-height:1.25;
+      font-weight:900;
+      font-style:italic;
+      color:#fff;
+      text-decoration:none;
+      letter-spacing:.2px;
+    }
+    .headlineLink:active{opacity:.9}
+
+    /* Bigger instructions */
+    .how{
+      margin-top:12px;
+      font-size:15px;
+      line-height:1.5;
+      color: var(--muted);
+    }
+    .how b{color:#fff}
+
+    .trust{
+      margin-top:12px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      font-size:12px;
+      color: rgba(243,244,246,.7);
+    }
+    .trust span{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      padding:8px 10px;
+      border-radius:999px;
+    }
+
+    /* ===== STICKY CTA ===== */
+    .sticky{
+      position:fixed;
+      left:0;right:0;bottom:0;
+      padding:10px 12px 14px;
+      background:linear-gradient(to top, rgba(5,6,10,.96), rgba(5,6,10,.35));
+      backdrop-filter: blur(10px);
+      z-index:999;
+    }
+    .stickyInner{
+      max-width:520px;
+      margin:0 auto;
+    }
+    .btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      padding:16px 14px;
+      border-radius:18px;
+      font-weight:900;
+      font-size:16px;
+      text-decoration:none;
+      user-select:none;
+      border:0;
+      cursor:pointer;
+      position:relative;
+    }
+    .btnPrimary{
+      background:var(--accent);
+      color:var(--accentText);
+      box-shadow:0 14px 40px rgba(34,197,94,.22);
+      overflow:hidden;
+    }
+
+    /* Shine only once every 10s (quick sweep, long idle) */
+    .btnPrimary::before{
+      content:"";
+      position:absolute; inset:-40%;
+      background:linear-gradient(90deg, rgba(255,255,255,.0), rgba(255,255,255,.22), rgba(255,255,255,.0));
+      transform:translateX(-120%) rotate(15deg);
+      animation:shine10 10s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes shine10{
+      0%   {transform:translateX(-120%) rotate(15deg)}
+      10%  {transform:translateX(120%) rotate(15deg)}
+      100% {transform:translateX(120%) rotate(15deg)}
+    }
+
+    .micro{
+      margin-top:8px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      font-size:12px;
+      color:rgba(255,255,255,.65);
+    }
+    .micro span{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      padding:6px 9px;
+      border-radius:999px;
+    }
+
+    .disc{
+      margin-top:10px;
+      font-size:11px;
+      color:rgba(255,255,255,.45);
+      line-height:1.35;
+    }
+
+    /* iOS safe area */
+    @supports(padding: max(0px)){
+      .sticky{ padding-bottom: max(14px, env(safe-area-inset-bottom));}
+      .wrap{ padding-bottom: max(170px, calc(150px + env(safe-area-inset-bottom))); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-label="logo">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M10.2 7.8c2.8-1.2 4.9-.2 6.2 1.1 1.4 1.4 2.2 3.6 1.2 6.1-1 2.5-3.1 4-5.8 4.6-2.7.6-5.8.2-7.8-1.8-2-2-2.5-5.2-1.8-7.8.6-2.7 2.1-4.8 5-6.2Z" fill="white" opacity=".9"/>
+            <path d="M12.5 6.1c.8 2.9.2 5.3-1.7 7.2-1.9 1.9-4.3 2.5-7.2 1.7" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
+          </svg>
+        </div>
+        <div class="brandText">
+          <b id="brandTitle">HOT TikTok</b>
+          <span id="brandSub">Знакомства для взрослых • 18+</span>
+        </div>
+      </div>
+
+      <div class="lang" role="group" aria-label="Language switch">
+        <button id="btnRu" type="button">RU</button>
+        <button id="btnUz" class="active" type="button">UZ</button>
+      </div>
+    </div>
+
+    <section class="card">
+      <div class="slider" id="slider" aria-label="Слайдер">
+        <div class="dots" id="dots"></div>
+
+        <div class="slides" id="slides">
+          <!-- JS builds slides -->
+        </div>
+
+        <div class="overlay">
+          <div class="rowTop">
+            <div class="kicker">
+              <span class="dot"></span>
+              <span id="lblOnline">Онлайн в UZ:</span> <b id="onlineCount">—</b>
+            </div>
+            <div class="kicker">
+              <span id="lblNearby">Рядом:</span> <b id="nearby">—</b>
+            </div>
+          </div>
+
+          <div class="rowBottom" aria-label="messages">
+            <div class="left">
+              <span>💬</span>
+              <span id="lblMsgs">Сообщений за 5 минут</span>
+            </div>
+            <div class="right" id="msgs5m">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="copy">
+        <a class="headlineLink" id="headlineLink" href="https://t.me/secretcs">🔥 Установи приложение и начни общение сразу. Приватно • 18+</a>
+
+        <div class="how" id="how">
+          Нажмите «Установить приложение».<br>
+          Перейдите в телеграм канал<br>
+          Откройте файл<br>
+          <b>Наслаждайтесь горячими девушками!</b>
+        </div>
+
+        <div class="trust">
+          <span id="t1">✔️ Бесплатно</span>
+          <span id="t2">✔️ Быстрая установка</span>
+          <span id="t3">✔️ Простая регистрация</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="disc" id="disc">
+      18+. Устанавливая приложение, вы соглашаетесь с условиями использования.
+    </div>
+  </div>
+
+  <div class="sticky" role="region" aria-label="Установка приложения">
+    <div class="stickyInner">
+      <a class="btn btnPrimary" id="installSticky" href="/go">Установить приложение</a>
+      <div class="micro">
+        <span id="mGeo">UZ</span>
+        <span>18+</span>
+        <span id="miniOnline">— онлайн</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id)=>document.getElementById(id);
+
+    // 🔴 Replace with your Telegram channel:
+    const TG_LINK = "/go";
+
+    function goTG(e){
+      if(e) e.preventDefault();
+      try{ if(window.fbq){ fbq('track', 'Lead'); } }catch(_e){}
+      // small delay to let pixel request fire
+      setTimeout(()=>{ window.location.href = TG_LINK; }, 180);
+      return;
+      try{
+        localStorage.setItem("clicked_install","1");
+        localStorage.setItem("clicked_install_ts", String(Date.now()));
+      }catch(_e){}
+    }
+
+    $("installSticky").addEventListener("click", goTG);
+    $("headlineLink").addEventListener("click", goTG);
+
+    // I18N
+    const I18N = {
+      ru: {
+        how: `Нажмите «Установить приложение».<br>Перейдите в телеграм канал<br>Откройте файл<br><b>Наслаждайтесь горячими девушками!</b>`,
+        brandSub: "Знакомства для взрослых • 18+",
+        lblOnline: "Онлайн в UZ:",
+        lblNearby: "Рядом:",
+        lblMsgs: "Сообщений за 5 минут",
+        headline: "🔥 Установи приложение и начни общение сразу. Приватно • 18+",
+        t1: "✔️ Бесплатно",
+        t2: "✔️ Быстрая установка",
+        t3: "✔️ Простая регистрация",
+        disc: "18+. Устанавливая приложение, вы соглашаетесь с условиями использования.",
+        cta: "Установить приложение",
+        miniOnlineSuffix: "онлайн"
+      },
+      uz: {
+        how: `“Ilovani o‘rnatish” tugmasini bosing.<br>Telegram kanalga o‘ting<br>Faylni oching<br><b>Issiq qizlardan zavqlaning!</b>`,
+        brandSub: "Kattalar uchun tanishuv • 18+",
+        lblOnline: "UZ onlayn:",
+        lblNearby: "Yaqinda:",
+        lblMsgs: "5 daqiqada xabarlar",
+        headline: "🔥 Ilovani o‘rnating va darhol suhbatni boshlang. Maxfiy • 18+",
+        t1: "✔️ Bepul",
+        t2: "✔️ Tez o‘rnatish",
+        t3: "✔️ Oson ro‘yxatdan o‘tish",
+        disc: "18+. Ilovani o‘rnatish orqali foydalanish shartlariga rozilik bildirasiz.",
+        cta: "Ilovani o‘rnatish",
+        miniOnlineSuffix: "onlayn"
+      }
+    };
+
+    let lang = "uz";
+    function setLang(next){
+      lang = next;
+      const t = I18N[lang];
+
+      $("brandSub").textContent = t.brandSub;
+      $("lblOnline").textContent = t.lblOnline;
+      $("lblNearby").textContent = t.lblNearby;
+      $("lblMsgs").textContent = t.lblMsgs;
+
+      $("headlineLink").textContent = t.headline;
+      $("disc").textContent = t.disc;
+
+      $("t1").textContent = t.t1;
+      $("t2").textContent = t.t2;
+      $("t3").textContent = t.t3;
+
+      $("installSticky").textContent = t.cta;
+      $("how").innerHTML = t.how;
+
+      $("btnRu").classList.toggle("active", lang === "ru");
+      $("btnUz").classList.toggle("active", lang === "uz");
+      document.documentElement.lang = (lang === "ru") ? "ru" : "uz";
+
+      $("miniOnline").textContent = `${stats.online} ${t.miniOnlineSuffix}`;
+    }
+
+    $("btnRu").addEventListener("click", ()=>setLang("ru"));
+    $("btnUz").addEventListener("click", ()=>setLang("uz"));
+
+    // Slider images (HQ)
+    const RAW_URLS = [
+      "https://i.imgur.com/7xJbcAH_d.png?maxwidth=520&shape=thumb&fidelity=high",
+      "https://i.imgur.com/h6SG9NL_d.png?maxwidth=520&shape=thumb&fidelity=high",
+      "https://i.imgur.com/KhPTL9s_d.png?maxwidth=520&shape=thumb&fidelity=high",
+      "https://i.imgur.com/Ct5MHDI_d.png?maxwidth=520&shape=thumb&fidelity=high"
+    ];
+    const SLIDES = RAW_URLS.map(u => u.replace("_d.png", ".png").replace("?maxwidth=520&shape=thumb&fidelity=high",""));
+
+    const slidesEl = $("slides");
+    const dotsEl = $("dots");
+    let idx = 0;
+
+    function buildSlides(){
+      slidesEl.innerHTML = "";
+      dotsEl.innerHTML = "";
+
+      SLIDES.forEach((src, i)=>{
+        const s = document.createElement("div");
+        s.className = "slide";
+        s.style.setProperty("--bgimg", `url('${src}')`);
+
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "slide";
+        img.draggable = false;
+        s.appendChild(img);
+
+        slidesEl.appendChild(s);
+
+        const d = document.createElement("i");
+        d.addEventListener("click", ()=>snapToIndex(i, true));
+        dotsEl.appendChild(d);
+      });
+
+      slidesEl.addEventListener("dragstart", (e)=>e.preventDefault());
+      updateDots();
+    }
+
+    function updateDots(){
+      [...dotsEl.children].forEach((d,i)=>d.classList.toggle("active", i===idx));
+    }
+
+    function snapToIndex(i, animate){
+      idx = (i + SLIDES.length) % SLIDES.length;
+      slidesEl.style.transition = animate ? "transform .35s ease" : "none";
+      slidesEl.style.transform = `translateX(${-idx*100}%)`;
+      updateDots();
+    }
+
+    buildSlides();
+    snapToIndex(0, false);
+
+    // autoplay every 5s
+    let timer = null;
+    function startAuto(){
+      stopAuto();
+      timer = setInterval(()=>snapToIndex(idx+1, true), 5000);
+    }
+    function stopAuto(){
+      if(timer){ clearInterval(timer); timer = null; }
+    }
+    startAuto();
+
+    // drag/swipe
+    let down = false;
+    let startX = 0;
+    let delta = 0;
+
+    function onDown(x){
+      down = true;
+      startX = x;
+      delta = 0;
+      slidesEl.classList.add("dragging");
+      slidesEl.style.transition = "none";
+      stopAuto();
+    }
+
+    function onMove(x){
+      if(!down) return;
+      delta = x - startX;
+      const w = $("slider").clientWidth || 1;
+      const pct = (delta / w) * 100;
+      slidesEl.style.transform = `translateX(${-(idx*100) + pct}%)`;
+    }
+
+    function onUp(){
+      if(!down) return;
+      down = false;
+      slidesEl.classList.remove("dragging");
+
+      const w = $("slider").clientWidth || 1;
+      const threshold = w * 0.16;
+
+      if(Math.abs(delta) > threshold){
+        snapToIndex(idx + (delta < 0 ? 1 : -1), true);
+      }else{
+        snapToIndex(idx, true);
+      }
+      startAuto();
+    }
+
+    const slider = $("slider");
+    slider.addEventListener("pointerdown", (e)=>{
+      slider.setPointerCapture(e.pointerId);
+      onDown(e.clientX);
+    });
+    slider.addEventListener("pointermove", (e)=>onMove(e.clientX));
+    slider.addEventListener("pointerup", onUp);
+    slider.addEventListener("pointercancel", onUp);
+
+    // Stats
+    const RANGE = {
+      online: [197, 629],
+      near: [4, 19],
+      msgs: [67, 132],
+    };
+
+    function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+    function randInt(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+
+    let stats = {
+      online: randInt(RANGE.online[0], RANGE.online[1]),
+      near: randInt(RANGE.near[0], RANGE.near[1]),
+      msgs: randInt(RANGE.msgs[0], RANGE.msgs[1]),
+    };
+
+    function paintStats(){
+      $("onlineCount").textContent = String(stats.online);
+      $("nearby").textContent = String(stats.near);
+      $("msgs5m").textContent = String(stats.msgs);
+      $("miniOnline").textContent = `${stats.online} ${I18N[lang].miniOnlineSuffix}`;
+    }
+
+    function stepStats(){
+      stats.online = clamp(stats.online + randInt(-14, 18), RANGE.online[0], RANGE.online[1]);
+      stats.near   = clamp(stats.near   + randInt(-1, 2),   RANGE.near[0],   RANGE.near[1]);
+      stats.msgs   = clamp(stats.msgs   + randInt(-4, 7),   RANGE.msgs[0],   RANGE.msgs[1]);
+      paintStats();
+    }
+
+    paintStats();
+    setInterval(stepStats, 12000);
+    
+
+    // set default language after all vars are ready
+    setLang(lang);
+window.addEventListener("resize", ()=> snapToIndex(idx, false));
+  </script>
+</body>
+</html>
